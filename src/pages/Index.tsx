@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'eact';
+import React, { useState } from 'react';
 import { MadeWithDyad } from '@/components/made-with-dyad';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
