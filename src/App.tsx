@@ -8,6 +8,9 @@ import NotFound from "./pages/NotFound";
 import ClientsList from "./pages/ClientsList";
 import ClientForm from "./pages/ClientForm";
 import ClientProfile from "./pages/ClientProfile";
+import ProjectsList from "./pages/ProjectsList";
+import ProjectForm from "./components/ProjectForm";
+import ProjectDetail from "./pages/ProjectDetail";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +28,12 @@ const App = () => (
           <Route path="/clients/new" element={<ClientForm />} />
           <Route path="/clients/:id" element={<ClientProfile />} />
           <Route path="/clients/:id/edit" element={<ClientForm />} />
+          
+          {/* Project Management Routes */}
+          <Route path="/projects" element={<ProjectsList />} />
+          <Route path="/projects/new" element={<ProjectForm />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
+          <Route path="/projects/:id/edit" element={<ProjectForm />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
