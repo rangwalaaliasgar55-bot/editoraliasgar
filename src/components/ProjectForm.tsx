@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -96,14 +96,13 @@ const ProjectForm = () => {
             name="client_id"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full bg-[#0B0C0E]/80 border-white/20 text-white">
-                  <SelectValue placeholder="Select client" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">Alex Rivera</SelectItem>
-                  <SelectItem value="2">Samira Khan</SelectItem>
-                </SelectContent>
+              <Select
+                className="w-full px-3 py-2 rounded-md border border-white/20 bg-[#0B0C0E]/80 text-white"
+                {...field}
+              >
+                <option value="">Select client</option>
+                <option value="1">Alex Rivera</option>
+                <option value="2">Samira Khan</option>
               </Select>
             )}
           />
@@ -131,21 +130,19 @@ const ProjectForm = () => {
             name="type"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full bg-[#0B0C0E]/80 border-white/20 text-white">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="youtube">YouTube</SelectItem>
-                  <SelectItem value="reel">Reel</SelectItem>
-                  <SelectItem value="shorts">Shorts</SelectItem>
-                  <SelectItem value="documentary">Documentary</SelectItem>
-                  <SelectItem value="ad">Ad</SelectItem>
-                  <SelectItem value="podcast">Podcast</SelectItem>
-                  <SelectItem value="motion_graphics">Motion Graphics</SelectItem>
-                  <SelectItem value="wedding">Wedding</SelectItem>
-                  <SelectItem value="corporate">Corporate</SelectItem>
-                </SelectContent>
+              <Select
+                className="w-full px-3 py-2 rounded-md border border-white/20 bg-[#0B0C0E]/80 text-white"
+                {...field}
+              >
+                <option value="youtube">YouTube</option>
+                <option value="reel">Reel</option>
+                <option value="shorts">Shorts</option>
+                <option value="documentary">Documentary</option>
+                <option value="ad">Ad</option>
+                <option value="podcast">Podcast</option>
+                <option value="motion_graphics">Motion Graphics</option>
+                <option value="wedding">Wedding</option>
+                <option value="corporate">Corporate</option>
               </Select>
             )}
           />
@@ -157,20 +154,18 @@ const ProjectForm = () => {
             name="status"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full bg-[#0B0C0E]/80 border-white/20 text-white">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="inquiry">Inquiry</SelectItem>
-                  <SelectItem value="negotiation">Negotiation</SelectItem>
-                  <SelectItem value="editing">Editing</SelectItem>
-                  <SelectItem value="revision">Revision</SelectItem>
-                  <SelectItem value="delivered">Delivered</SelectItem>
-                  <SelectItem value="waiting_payment">Waiting Payment</SelectItem>
-                  <SelectItem value="paid">Paid</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
-                </SelectContent>
+              <Select
+                className="w-full px-3 py-2 rounded-md border border-white/20 bg-[#0B0C0E]/80 text-white"
+                {...field}
+              >
+                <option value="inquiry">Inquiry</option>
+                <option value="negotiation">Negotiation</option>
+                <option value="editing">Editing</option>
+                <option value="revision">Revision</option>
+                <option value="delivered">Delivered</option>
+                <option value="waiting_payment">Waiting Payment</option>
+                <option value="paid">Paid</option>
+                <option value="cancelled">Cancelled</option>
               </Select>
             )}
           />
@@ -243,14 +238,12 @@ const ProjectForm = () => {
             name="advance_paid"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={(val) => field.onChange(val === "true")} value={field.value ? "true" : "false"}>
-                <SelectTrigger className="w-full bg-[#0B0C0E]/80 border-white/20 text-white">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="false">No</SelectItem>
-                  <SelectItem value="true">Yes</SelectItem>
-                </SelectContent>
+              <Select
+                className="w-full px-3 py-2 rounded-md border border-white/20 bg-[#0B0C0E]/80 text-white"
+                {...field}
+              >
+                <option value="false">No</option>
+                <option value="true">Yes</option>
               </Select>
             )}
           />
