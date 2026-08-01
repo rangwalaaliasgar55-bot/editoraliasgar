@@ -16,6 +16,7 @@ import AIAssistant from "./pages/AIAssistant";
 import Invoices from "./pages/Invoices";
 import Expenses from "./pages/Expenses";
 import Settings from "./pages/Settings";
+import ServicesChat from "./pages/ServicesChat";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Public-facing services chat — visitors bring their own OpenRouter key */}
+          <Route path="/chat" element={<ServicesChat />} />
+
           {/* All admin pages share the sidebar/topbar shell via AdminLayout */}
           <Route element={<AdminLayout />}>
             <Route path="/" element={<Dashboard />} />

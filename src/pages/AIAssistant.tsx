@@ -10,17 +10,20 @@ import { ChatMessage } from "@/types";
 const AIAssistant = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const { callOpenRouter, loading, error } = useOpenRouter();
+  const { chat, loading, error } = useOpenRouter();
 
   const handleSend = async () => {
     const prompt = input.trim();
     if (!prompt || loading) return;
 
-    const userMessage: ChatMessage = { role: "user", content: prompt };
-    setMessages((prev) => [...prev, userMessage]);
+    const nextMessages: ChatMessage[] = [
+      ...messages,
+      { role: "user", content: prompt },
+    ];
+    setMessages(nextMessages);
     setInput("");
 
-    const reply = await callOpenRouter(prompt);
+    const reply = await chat(nextMessages);
     if (reply) {
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     }

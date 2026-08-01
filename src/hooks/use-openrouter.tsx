@@ -1,55 +1,72 @@
 "use client";
 
 import { useState } from "react";
+import { ChatMessage } from "@/types";
 
-// Read the key from the environment, never hardcode it here.
-// Set VITE_OPENROUTER_API_KEY in a local, gitignored .env file
-// (see .env.example for the expected variable names).
-const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY as string | undefined;
+// Falls back to this env-configured key when no visitor-supplied key is
+// given (used by the internal admin AI Assistant). Never hardcode a real
+// key here — set VITE_OPENROUTER_API_KEY in a local, gitignored .env file.
+// See .env.example for the expected variable names.
+const ENV_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY as
+  | string
+  | undefined;
 const PRIMARY_MODEL = import.meta.env.VITE_OPENROUTER_MODEL || "openai/gpt-4o";
 const FALLBACK_MODEL =
   import.meta.env.VITE_OPENROUTER_FALLBACK_MODEL || "openai/gpt-3.5-turbo";
 
-const callModel = async (prompt: string, model: string) => {
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+const callModel = async (
+  messages: ChatMessage[],
+  model: string,
+  apiKey: string
+) => {
+  return fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${API_KEY ?? ""}`,
+      Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      model,
-      messages: [{ role: "user", content: prompt }],
-    }),
+    body: JSON.stringify({ model, messages }),
   });
-
-  return response;
 };
+
+interface ChatOptions {
+  /** A visitor-supplied OpenRouter key. Falls back to the env key if omitted. */
+  apiKey?: string;
+}
 
 const useOpenRouter = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const callOpenRouter = async (prompt: string) => {
+  /**
+   * Sends the full message history to OpenRouter and returns the
+   * assistant's reply text, or null on failure (with `error` set).
+   */
+  const chat = async (messages: ChatMessage[], options?: ChatOptions) => {
     setLoading(true);
     setError(null);
 
-    if (!API_KEY) {
+    const key = options?.apiKey?.trim() || ENV_API_KEY;
+
+    if (!key) {
       setError(
-        "OpenRouter isn't configured yet. Add VITE_OPENROUTER_API_KEY to a local .env file (see .env.example)."
+        "No OpenRouter API key configured. Add one to use the AI assistant."
       );
       setLoading(false);
       return null;
     }
 
     try {
-      let response = await callModel(prompt, PRIMARY_MODEL);
+      let response = await callModel(messages, PRIMARY_MODEL, key);
 
       // Fall back to a cheaper/alternate model on rate limit or server error.
       if (response.status === 429 || response.status >= 500) {
-        response = await callModel(prompt, FALLBACK_MODEL);
+        response = await callModel(messages, FALLBACK_MODEL, key);
       }
 
+      if (response.status === 401) {
+        throw new Error("That API key was rejected by OpenRouter.");
+      }
       if (!response.ok) {
         throw new Error(`OpenRouter request failed (${response.status})`);
       }
@@ -57,14 +74,16 @@ const useOpenRouter = () => {
       const data = await response.json();
       return data.choices?.[0]?.message?.content ?? null;
     } catch (err) {
-      setError("Failed to get AI response. Please try again.");
+      setError(
+        err instanceof Error ? err.message : "Failed to get AI response."
+      );
       return null;
     } finally {
       setLoading(false);
     }
   };
 
-  return { callOpenRouter, loading, error };
+  return { chat, loading, error };
 };
 
 export default useOpenRouter;
