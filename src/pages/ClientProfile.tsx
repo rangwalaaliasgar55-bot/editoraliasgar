@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft } from "lucide-react";
+import { formatINR } from "@/lib/utils";
 
 interface Client {
   id: string;
@@ -77,7 +78,7 @@ const ClientProfile = () => {
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div><p className="text-xs text-gray-400">Proj</p><p className="text-xl font-mono">{client.projects}</p></div>
                 <div><p className="text-xs text-gray-400">Inv</p><p className="text-xl font-mono">{client.invoices}</p></div>
-                <div><p className="text-xs text-gray-400">Rev</p><p className="text-xl font-mono">${client.total_revenue.toLocaleString()}</p></div>
+                <div><p className="text-xs text-gray-400">Rev</p><p className="text-xl font-mono">{formatINR(client.total_revenue)}</p></div>
               </div>
               <Badge className="mt-2 bg-[#2DD4BF]/20 text-[#2DD4BF]">VIP Client</Badge>
             </Card>

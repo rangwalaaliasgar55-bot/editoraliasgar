@@ -222,7 +222,7 @@ const ProjectForm = () => {
         </div>
 
         <div>
-          <Label className="block text-sm font-medium mb-1">Amount ($)</Label>
+          <Label className="block text-sm font-medium mb-1">Amount (₹)</Label>
           <Controller
             name="amount"
             control={control}

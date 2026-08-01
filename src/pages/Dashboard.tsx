@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import ProjectStatusTimeline from "@/components/ProjectStatusTimeline";
 import AIChat from "@/components/AIChat";
 import useAIInsights from "@/hooks/use-ai-insights";
+import { formatINR } from "@/lib/utils";
 
 import {
   BarChart,
@@ -124,14 +125,14 @@ const Dashboard = () => {
 
           {/* Stat Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard title="Total Revenue" value={`$${mockStats.totalRevenue.toLocaleString()}`} subtitle="All time" />
-            <StatCard title="Pending Payments" value={`$${mockStats.pendingPayments.toLocaleString()}`} subtitle="Awaiting payment" />
-            <StatCard title="Overdue Payments" value={`$${mockStats.overduePayments.toLocaleString()}`} subtitle="Past due" />
+            <StatCard title="Total Revenue" value={formatINR(mockStats.totalRevenue)} subtitle="All time" />
+            <StatCard title="Pending Payments" value={formatINR(mockStats.pendingPayments)} subtitle="Awaiting payment" />
+            <StatCard title="Overdue Payments" value={formatINR(mockStats.overduePayments)} subtitle="Past due" />
             <StatCard title="Total Clients" value={mockStats.totalClients.toString()} subtitle="Active clients" />
             <StatCard title="Active Projects" value={mockStats.activeProjects.toString()} subtitle="In progress" />
             <StatCard title="Completed Projects" value={mockStats.completedProjects.toString()} subtitle="Finished" />
-            <StatCard title="Monthly Profit" value={`$${mockStats.monthlyProfit.toLocaleString()}`} subtitle="This month" />
-            <StatCard title="Net Earnings" value={`$${mockStats.netEarnings.toLocaleString()}`} subtitle="After expenses" />
+            <StatCard title="Monthly Profit" value={formatINR(mockStats.monthlyProfit)} subtitle="This month" />
+            <StatCard title="Net Earnings" value={formatINR(mockStats.netEarnings)} subtitle="After expenses" />
           </div>
 
           {/* Charts Grid */}

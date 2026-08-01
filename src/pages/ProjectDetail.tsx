@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArrowUp, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatINR } from "@/lib/utils";
 import ProjectStatusTimeline, { ProjectStatus } from "@/components/ProjectStatusTimeline";
 
 interface Client {
@@ -137,7 +137,7 @@ const ProjectDetail = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-gray-400">Amount</span>
-                  <p className="text-2xl font-medium">${project.amount.toLocaleString()}</p>
+                  <p className="text-2xl font-medium">{formatINR(project.amount)}</p>
                 </div>
               </div>
             </Card>
