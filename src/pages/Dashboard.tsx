@@ -115,28 +115,26 @@ const Dashboard = () => {
   }, [fetchAIInsights]);
 
   return (
-    <div className="flex min-h-screen bg-[#0B0C0E] text-white">
-      <div className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-7xl mx-auto">
-          <header className="mb-8">
-            <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
-            <p className="text-gray-500 mt-1">Welcome back, here's what's happening today.</p>
-          </header>
+    <div>
+      <header className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-gray-500 mt-1">Welcome back, here's what's happening today.</p>
+      </header>
 
-          {/* Stat Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard title="Total Revenue" value={formatINR(mockStats.totalRevenue)} subtitle="All time" />
-            <StatCard title="Pending Payments" value={formatINR(mockStats.pendingPayments)} subtitle="Awaiting payment" />
-            <StatCard title="Overdue Payments" value={formatINR(mockStats.overduePayments)} subtitle="Past due" />
-            <StatCard title="Total Clients" value={mockStats.totalClients.toString()} subtitle="Active clients" />
-            <StatCard title="Active Projects" value={mockStats.activeProjects.toString()} subtitle="In progress" />
-            <StatCard title="Completed Projects" value={mockStats.completedProjects.toString()} subtitle="Finished" />
-            <StatCard title="Monthly Profit" value={formatINR(mockStats.monthlyProfit)} subtitle="This month" />
-            <StatCard title="Net Earnings" value={formatINR(mockStats.netEarnings)} subtitle="After expenses" />
-          </div>
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <StatCard title="Total Revenue" value={formatINR(mockStats.totalRevenue)} subtitle="All time" />
+        <StatCard title="Pending Payments" value={formatINR(mockStats.pendingPayments)} subtitle="Awaiting payment" />
+        <StatCard title="Overdue Payments" value={formatINR(mockStats.overduePayments)} subtitle="Past due" />
+        <StatCard title="Total Clients" value={mockStats.totalClients.toString()} subtitle="Active clients" />
+        <StatCard title="Active Projects" value={mockStats.activeProjects.toString()} subtitle="In progress" />
+        <StatCard title="Completed Projects" value={mockStats.completedProjects.toString()} subtitle="Finished" />
+        <StatCard title="Monthly Profit" value={formatINR(mockStats.monthlyProfit)} subtitle="This month" />
+        <StatCard title="Net Earnings" value={formatINR(mockStats.netEarnings)} subtitle="After expenses" />
+      </div>
 
-          {/* Charts Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <ChartCard title="Monthly Revenue">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={monthlyRevenueData}>
@@ -227,8 +225,6 @@ const Dashboard = () => {
               </ResponsiveContainer>
             </ChartCard>
           </div>
-        </div>
-      </div>
     </div>
   );
 };
